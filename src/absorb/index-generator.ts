@@ -74,13 +74,12 @@ async function scanKnowledgeDir(knowledgeDir: string, indexFile: string): Promis
   const indexBasename = indexFile.split('/').pop() ?? 'INDEX.md';
   const mdFiles = entries.filter(e => e.endsWith('.md') && e !== indexBasename).sort();
 
-  const results: KnowledgeFile[] = [];
-  for (const filename of mdFiles) {
-    const filePath = join(knowledgeDir, filename);
-    const { title, summary } = await extractMetadata(filePath);
-    results.push({ filename, title, summary });
-  }
-  return results;
+  return Promise.all(
+    mdFiles.map(async (filename) => {
+      const { title, summary } = await extractMetadata(join(knowledgeDir, filename));
+      return { filename, title, summary };
+    })
+  );
 }
 
 /**

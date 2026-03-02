@@ -28,11 +28,11 @@ knowhub/
 
 - **Knowledge Hub** — a git repo (GitHub/GitLab) containing curated markdown knowledge files, queryable by humans and AI
 - **Learning** — a discrete piece of knowledge captured as a GitHub/GitLab issue (the "inbox")
-- **Capture** — creating an issue on the hub repo; thin wrapper over `gh`/`glab` CLI
+- **Capture** — creating an issue on the hub repo via the provider REST API
 - **Absorb** — batch process that fetches open issues, uses Claude to synthesize them into the knowledge base markdown files, commits directly
 - **Index** — an `INDEX.md` file at the hub root for progressive disclosure; Claude reads this first and dives deeper as needed
 - **Hub Config** — `.knowhub.yml` in the hub repo defining structure rules, topic taxonomy, and absorb conventions
-- **Provider Adapter** — abstraction over GitHub (`gh`) and GitLab (`glab`) CLIs for uniform issue/repo operations
+- **Provider Adapter** — abstraction over GitHub (`@octokit/rest`) and GitLab (`@gitbeaker/rest`) REST APIs for uniform issue/repo operations
 
 ## System Overview
 
@@ -42,7 +42,7 @@ knowhub/
 │                                                 │
 │  Claude Code session → knowhub capture / plugin │
 │  Manual entry        → knowhub capture          │
-│  Script/webhook      → gh/glab issue create     │
+│  Script/webhook      → provider REST API         │
 │  Auto-memory scan    → /knowhub:scan            │
 └─────────────────────┬───────────────────────────┘
                       │
@@ -111,7 +111,7 @@ Provider
 └── getRepoInfo()
 ```
 
-GitHub adapter wraps `gh` CLI. GitLab adapter wraps `glab` CLI. Both required to be pre-installed and authenticated by the user.
+GitHub adapter uses `@octokit/rest`. GitLab adapter uses `@gitbeaker/rest`. Auth via personal access token stored in `~/.knowhub/config.yml` or `GITHUB_TOKEN`/`GITLAB_TOKEN` env vars.
 
 ### Absorb Engine
 
@@ -180,6 +180,7 @@ absorb:
 
 ## Decisions
 
+- **Zero external binary deps** — `@octokit/rest` and `@gitbeaker/rest` replace `gh`/`glab` CLI. `npm install -g knowhub` is all the user needs; no provider CLIs required. `(2026-03-02)`
 - **CLI + Plugin, not just one** — CLI serves CI/CD, non-Claude users, and provides `--help` discoverability. Plugin provides the UX layer for Claude Code users. Plugin calls CLI under the hood. `(2026-03-01)`
 - **TypeScript for CLI** — better CLI tooling ecosystem (commander, inquirer), native JSON, aligns with Claude Code plugin ecosystem. `(2026-03-01)`
 - **Issues as inbox, not direct commits** — decouples capture from organization. Capture is frictionless (just create an issue). Organization happens during absorb when Claude has full context. `(2026-03-01)`
@@ -193,16 +194,18 @@ absorb:
 
 ## Gotchas
 
-- `gh` and `glab` CLIs must be pre-installed and authenticated — knowhub does not manage git provider credentials itself
 - Absorb requires Claude access (one of: active session, `claude` CLI, or `ANTHROPIC_API_KEY`) — no offline mode for synthesis
 - Hub repo must be cloned locally for absorb to write files — the `local` path in config must be valid
+- `@gitbeaker/rest` Issues API: use `Issues` named export, constructor takes `{ host, token }` — not a single `Gitlab` class
+- INDEX.md commit: guarded by `hasUncommittedChanges()` — INDEX.md may not change if no knowledge files were added/updated
+- Vitest ESM: mocking `existsSync` from `fs` is unreliable — use real temp dirs (`os.tmpdir()` + `fs.mkdtemp`) for file system tests
 
 ## Dependencies
 
 - `commander` — CLI command parsing and help generation
-- `inquirer` — interactive prompts for `knowhub init`
+- `inquirer` / `@inquirer/prompts` — interactive prompts for `knowhub init`
 - `yaml` — parse/write `.knowhub.yml` and config files
-- `gh` CLI (external) — GitHub issue/repo operations
-- `glab` CLI (external) — GitLab issue/repo operations
+- `@octokit/rest` — GitHub API client (replaces `gh` CLI dependency)
+- `@gitbeaker/rest` — GitLab API client (replaces `glab` CLI dependency)
 - `claude` CLI (external, optional) — headless absorb invocation
-- `@anthropic-ai/sdk` (optional) — direct API fallback for absorb in CI/CD
+- `@anthropic-ai/sdk` — direct API fallback for absorb in CI/CD

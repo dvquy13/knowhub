@@ -4,7 +4,7 @@ import * as path from 'path';
 import { parse } from 'yaml';
 import { UserConfig, HubFileConfig, ResolvedHub } from './types.js';
 import { DEFAULT_HUB_FILE_CONFIG } from './defaults.js';
-import { KnowhubError } from '../utils/errors.js';
+import { KnowhubError, getErrorMessage } from '../utils/errors.js';
 
 export function userConfigPath(): string {
   return path.join(os.homedir(), '.knowhub', 'config.yml');
@@ -28,7 +28,7 @@ export async function loadUserConfig(): Promise<UserConfig> {
     parsed = parse(raw);
   } catch (err: unknown) {
     throw new KnowhubError(
-      `Malformed config file at ${configPath}: ${err instanceof Error ? err.message : String(err)}`,
+      `Malformed config file at ${configPath}: ${getErrorMessage(err)}`,
       1
     );
   }
@@ -77,7 +77,7 @@ export async function loadHubFileConfig(localPath: string): Promise<HubFileConfi
     parsed = parse(raw);
   } catch (err: unknown) {
     throw new KnowhubError(
-      `Malformed hub config file at ${hubFilePath}: ${err instanceof Error ? err.message : String(err)}`,
+      `Malformed hub config file at ${hubFilePath}: ${getErrorMessage(err)}`,
       1
     );
   }

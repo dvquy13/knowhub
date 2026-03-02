@@ -1,13 +1,7 @@
 import { execSync } from 'child_process';
-import { existsSync } from 'fs';
-import { join } from 'path';
 
 function exec(cmd: string, cwd: string): string {
   return execSync(cmd, { cwd, encoding: 'utf-8', stdio: ['pipe', 'pipe', 'pipe'] }).trim();
-}
-
-export function isGitRepo(dir: string): boolean {
-  return existsSync(join(dir, '.git'));
 }
 
 export function gitAdd(dir: string, files: string | string[] = '.'): void {

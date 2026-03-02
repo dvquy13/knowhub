@@ -6,14 +6,15 @@ Personal knowledge hub tool — captures learnings as GitHub/GitLab issues, synt
 
 - See `docs/ARCHITECTURE.md` for full system design, data flow, and decisions
 - Two deliverables: CLI (`knowhub`) + Claude Code plugin
-- Provider adapter pattern abstracts GitHub (`gh`) / GitLab (`glab`)
+- Provider adapter pattern abstracts GitHub/GitLab via REST API — zero external binary deps
 
 ## Tech Stack
 
-- TypeScript, distributed via npm
-- CLI: commander + inquirer
+- TypeScript ESM-only (`"type": "module"`, NodeNext), distributed via npm
+- CLI: commander + inquirer (prompts via `@inquirer/prompts`)
+- Providers: `@octokit/rest` (GitHub), `@gitbeaker/rest` (GitLab) — no `gh`/`glab` CLI required
+- Claude integration: `@anthropic-ai/sdk` for direct API fallback in CI/CD
 - Config: YAML (`~/.knowhub/config.yml` user-level, `.knowhub.yml` hub-level)
-- No runtime dependencies on databases or servers — everything is git + issues + markdown
 
 ## Commands
 
@@ -26,4 +27,7 @@ Personal knowledge hub tool — captures learnings as GitHub/GitLab issues, synt
 - Provider adapters in `src/providers/` — one file per provider, implement shared interface
 - Skills in `plugin/skills/` — one directory per skill with `SKILL.md`
 - All CLI commands must support `--hub <name>` flag to override default hub
-- Config resolution: CLI flag > project `.knowhub` file > `~/.knowhub/config.yml` default_hub
+- Config resolution: CLI flag > `~/.knowhub/config.yml` default_hub
+- All imports within `src/` must use `.js` extension (NodeNext ESM requirement)
+- Use `getErrorMessage(err)` from `src/utils/errors.ts` — never inline `err instanceof Error ? err.message : String(err)`
+- Inquirer v12: import prompts from `@inquirer/prompts` (`input`, `select`, `confirm`, `password`)

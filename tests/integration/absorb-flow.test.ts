@@ -27,7 +27,7 @@ vi.mock('../../src/absorb/claude.js', () => ({
 vi.mock('../../src/utils/git.js', () => ({
   gitAdd: vi.fn(),
   gitCommit: vi.fn(),
-  isGitRepo: vi.fn(() => true),
+  hasUncommittedChanges: vi.fn(() => true),
 }));
 
 // Import mocked modules after vi.mock declarations

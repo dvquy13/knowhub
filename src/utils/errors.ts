@@ -8,3 +8,7 @@ export class KnowhubError extends Error {
     this.name = 'KnowhubError';
   }
 }
+
+export function getErrorMessage(err: unknown): string {
+  return err instanceof Error ? err.message : String(err);
+}

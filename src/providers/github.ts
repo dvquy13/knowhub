@@ -1,11 +1,36 @@
 import { Octokit } from '@octokit/rest';
 import type { Provider, Issue, RepoInfo } from './types.js';
 
+type OctokitLabel = string | { name?: string | null };
+type OctokitRepoData = {
+  owner: { login: string };
+  name: string;
+  full_name: string;
+  default_branch: string;
+  clone_url: string;
+  ssh_url: string;
+};
+
 export class GitHubProvider implements Provider {
   private octokit: Octokit;
 
   constructor(private owner: string, private repo: string, token: string) {
     this.octokit = new Octokit({ auth: token });
+  }
+
+  private normalizeLabel(label: OctokitLabel): string {
+    return typeof label === 'string' ? label : (label.name ?? '');
+  }
+
+  private mapRepoInfo(data: OctokitRepoData): RepoInfo {
+    return {
+      owner: data.owner.login,
+      name: data.name,
+      fullName: data.full_name,
+      defaultBranch: data.default_branch,
+      cloneUrl: data.clone_url,
+      sshUrl: data.ssh_url,
+    };
   }
 
   async createIssue(title: string, body: string, labels?: string[]): Promise<Issue> {
@@ -22,9 +47,7 @@ export class GitHubProvider implements Provider {
       number: data.number,
       title: data.title,
       body: data.body ?? '',
-      labels: (data.labels ?? []).map((l) =>
-        typeof l === 'string' ? l : (l.name ?? '')
-      ),
+      labels: (data.labels ?? []).map(l => this.normalizeLabel(l as OctokitLabel)),
       createdAt: data.created_at,
       url: data.html_url,
     };
@@ -42,9 +65,7 @@ export class GitHubProvider implements Provider {
       number: data.number,
       title: data.title,
       body: data.body ?? '',
-      labels: (data.labels ?? []).map((l) =>
-        typeof l === 'string' ? l : (l.name ?? '')
-      ),
+      labels: (data.labels ?? []).map(l => this.normalizeLabel(l as OctokitLabel)),
       createdAt: data.created_at,
       url: data.html_url,
     }));
@@ -60,19 +81,8 @@ export class GitHubProvider implements Provider {
   }
 
   async getRepoInfo(): Promise<RepoInfo> {
-    const response = await this.octokit.rest.repos.get({
-      owner: this.owner,
-      repo: this.repo,
-    });
-    const data = response.data;
-    return {
-      owner: data.owner.login,
-      name: data.name,
-      fullName: data.full_name,
-      defaultBranch: data.default_branch,
-      cloneUrl: data.clone_url,
-      sshUrl: data.ssh_url,
-    };
+    const response = await this.octokit.rest.repos.get({ owner: this.owner, repo: this.repo });
+    return this.mapRepoInfo(response.data);
   }
 
   async createRepo(name: string, description?: string, isPrivate?: boolean): Promise<RepoInfo> {
@@ -81,14 +91,6 @@ export class GitHubProvider implements Provider {
       description,
       private: isPrivate,
     });
-    const data = response.data;
-    return {
-      owner: data.owner.login,
-      name: data.name,
-      fullName: data.full_name,
-      defaultBranch: data.default_branch,
-      cloneUrl: data.clone_url,
-      sshUrl: data.ssh_url,
-    };
+    return this.mapRepoInfo(response.data);
   }
 }

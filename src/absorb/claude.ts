@@ -1,6 +1,6 @@
 import { execSync } from 'child_process';
 import Anthropic from '@anthropic-ai/sdk';
-import { KnowhubError } from '../utils/errors.js';
+import { KnowhubError, getErrorMessage } from '../utils/errors.js';
 import type { Issue } from '../providers/types.js';
 import type { HubFileConfig } from '../config/types.js';
 
@@ -117,7 +117,7 @@ async function invokeCLI(prompt: string): Promise<AbsorbResult> {
     throw new KnowhubError(
       'claude CLI invocation failed',
       1,
-      err instanceof Error ? err.message : String(err)
+      getErrorMessage(err)
     );
   }
   return parseAbsorbResponse(output);

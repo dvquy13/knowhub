@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { Command } from 'commander';
 import { setDebug } from './utils/logger.js';
-import { KnowhubError } from './utils/errors.js';
+import { KnowhubError, getErrorMessage } from './utils/errors.js';
 import { logger } from './utils/logger.js';
 import { makeCaptureCommand } from './cli/capture.js';
 import { makeIndexCommand } from './cli/index-cmd.js';
@@ -39,6 +39,6 @@ program.parseAsync(process.argv).catch((err: unknown) => {
     }
     process.exit(err.exitCode);
   }
-  logger.error(err instanceof Error ? err.message : String(err));
+  logger.error(getErrorMessage(err));
   process.exit(1);
 });

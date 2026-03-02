@@ -10,7 +10,7 @@ import { DEFAULT_HUB_FILE_CONFIG } from '../config/defaults.js';
 import { getProvider } from '../providers/factory.js';
 import { gitClone, gitAdd, gitCommit, gitPush, gitInit, gitRemoteAdd } from '../utils/git.js';
 import { logger } from '../utils/logger.js';
-import { KnowhubError } from '../utils/errors.js';
+import { KnowhubError, getErrorMessage } from '../utils/errors.js';
 import type { HubConfig, HubFileConfig, UserConfig } from '../config/types.js';
 
 export function makeInitCommand(): Command {
@@ -79,7 +79,7 @@ export function makeInitCommand(): Command {
           repoInfo = await providerClient.createRepo(repoName, description, isPrivate);
         } catch (err) {
           throw new KnowhubError(
-            `Failed to create repository: ${err instanceof Error ? err.message : String(err)}`,
+            `Failed to create repository: ${getErrorMessage(err)}`,
             1,
             'Check that your token has the required repo/project permissions'
           );
@@ -105,7 +105,7 @@ export function makeInitCommand(): Command {
           repoInfo = await providerClient.getRepoInfo();
         } catch (err) {
           throw new KnowhubError(
-            `Failed to access repository: ${err instanceof Error ? err.message : String(err)}`,
+            `Failed to access repository: ${getErrorMessage(err)}`,
             1,
             'Check your token permissions and repository path'
           );
@@ -173,13 +173,12 @@ export function makeInitCommand(): Command {
           gitPush(hubConfig.local);
           logger.success('Pushed initial commit');
         } catch (err) {
-          logger.warn(`Could not push: ${err instanceof Error ? err.message : String(err)}`);
+          logger.warn(`Could not push: ${getErrorMessage(err)}`);
         }
       }
 
       // Step 8: Write user config
       const userConfig: UserConfig = await loadUserConfig();
-      userConfig.hubs = userConfig.hubs ?? {};
       userConfig.hubs[hubName] = hubConfig;
       if (!userConfig.default_hub) {
         userConfig.default_hub = hubName;
