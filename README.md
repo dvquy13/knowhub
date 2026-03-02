@@ -12,6 +12,27 @@ knowhub is a two-part tool: a CLI and a Claude Code plugin. You capture learning
 
 **Prerequisites:** Node.js 18+, a GitHub or GitLab account, and a personal access token.
 
+### Claude Code users (recommended)
+
+Install the plugin, then let `/knowhub:setup` walk you through everything:
+
+In a Claude Code session:
+```
+/plugin marketplace add dvquy13/knowhub
+```
+
+In your terminal:
+```bash
+claude plugin install knowhub@knowhub
+```
+
+Then back in any Claude Code session:
+```
+/knowhub:setup
+```
+
+### CLI only
+
 ```bash
 npm install -g @dvquys/knowhub
 knowhub init
@@ -102,14 +123,7 @@ All commands accept:
 
 ## Claude Code Plugin
 
-The plugin provides slash commands inside Claude Code sessions, letting Claude help you capture and organize learnings without leaving your flow.
-
-### Install
-
-```bash
-/plugin marketplace add dvquy13/knowhub
-claude plugin install knowhub@knowhub
-```
+The plugin provides slash commands inside Claude Code sessions, letting Claude help you capture and organize learnings without leaving your flow. See [Quick Start](#quick-start) for install instructions.
 
 ### Slash commands
 

@@ -9,7 +9,7 @@ Guided onboarding for knowhub. Walk the user through setting up their first know
 
 ## Behavior
 
-1. Ask the user if they have knowhub installed (`knowhub --version`). If not, tell them to run `npm install -g knowhub` first.
+1. Ask the user if they have knowhub installed (`knowhub --version`). If not, tell them to run `npm install -g @dvquys/knowhub` first.
 
 2. Check if a hub is already configured by attempting to read `~/.knowhub/config.yml`. If configured, show the existing hubs and ask if they want to add another.
 

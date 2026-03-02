@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "description": "Personal knowledge hub — capture learnings as issues, synthesize into curated markdown via Claude",
   "skills": [
-    "skills/setup",
-    "skills/capture",
-    "skills/absorb",
-    "skills/scan"
+    "./skills/setup",
+    "./skills/capture",
+    "./skills/absorb",
+    "./skills/scan"
   ]
 }

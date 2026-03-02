@@ -91,16 +91,11 @@ TypeScript CLI distributed via npm as `@dvquys/knowhub` (`npm install -g @dvquys
 
 ### Claude Code Plugin
 
-Distributed via Claude Code marketplace. Source is `./plugin/` in this repo; `.claude-plugin/marketplace.json` registers it. Install flow:
-
-```bash
-/plugin marketplace add dvquy13/knowhub        # add this repo as a marketplace
-claude plugin install knowhub@knowhub  # install the plugin
-```
+Distributed via Claude Code marketplace. Source is `./plugin/` in this repo; `.claude-plugin/marketplace.json` registers it. See README for install flow.
 
 Provides:
 
-- **`/knowhub:setup`** — guided conversational onboarding (replaces raw `knowhub init` for Claude Code users)
+- **`/knowhub:setup`** — guided conversational onboarding; checks CLI is installed (prompts `npm install -g @dvquys/knowhub` if not), then runs `knowhub init`; recommended entry point for Claude Code users
 - **`/knowhub:capture`** — capture a learning with Claude's help formatting it
 - **`/knowhub:absorb`** — run absorb with Claude explaining what happened
 - **`/knowhub:scan`** — mine Claude auto-memory files for learnings worth promoting to the hub
@@ -190,7 +185,7 @@ absorb:
 ## Decisions
 
 - **npm package scoped as `@dvquys/knowhub`** — `knowhub` unscoped name was taken on npm by an unrelated project. Scoped under npm username `dvquys` (≠ GitHub username `dvquy13`). `(2026-03-03)`
-- **Plugin distributed via GitHub marketplace** — `.claude-plugin/marketplace.json` (not root); users add `dvquy13/knowhub` as a Claude Code marketplace. No separate plugin registry needed. `(2026-03-03)`
+- **Plugin distributed via GitHub marketplace** — `.claude-plugin/marketplace.json` (not root `marketplace.json`); skill paths in `plugin.json` must start with `./` (e.g. `"./skills/setup"`); users add `dvquy13/knowhub` as a Claude Code marketplace. No separate plugin registry needed. `(2026-03-03)`
 - **Zero external binary deps** — `@octokit/rest` and `@gitbeaker/rest` replace `gh`/`glab` CLI. `npm install -g @dvquys/knowhub` is all the user needs; no provider CLIs required. `(2026-03-02)`
 - **CLI + Plugin, not just one** — CLI serves CI/CD, non-Claude users, and provides `--help` discoverability. Plugin provides the UX layer for Claude Code users. Plugin calls CLI under the hood. `(2026-03-01)`
 - **TypeScript for CLI** — better CLI tooling ecosystem (commander, inquirer), native JSON, aligns with Claude Code plugin ecosystem. `(2026-03-01)`
