@@ -205,6 +205,7 @@ absorb:
 - `@gitbeaker/rest` Issues API: use `Issues` named export, constructor takes `{ host, token }` — not a single `Gitlab` class
 - INDEX.md commit: guarded by `hasUncommittedChanges()` — INDEX.md may not change if no knowledge files were added/updated
 - Vitest ESM: mocking `existsSync` from `fs` is unreliable — use real temp dirs (`os.tmpdir()` + `fs.mkdtemp`) for file system tests
+- Plugin marketplace cache is not auto-refreshed when upstream GitHub updates — run `claude plugin marketplace update knowhub` before reinstalling; stale cache silently uses the old commit
 
 ## Dependencies
 
