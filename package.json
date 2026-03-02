@@ -1,0 +1,58 @@
+{
+  "name": "knowhub",
+  "version": "0.1.0",
+  "description": "Personal knowledge hub — capture learnings as issues, synthesize into curated markdown via Claude",
+  "type": "module",
+  "bin": {
+    "knowhub": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "files": [
+    "dist",
+    "templates",
+    "plugin"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint src tests",
+    "prepublishOnly": "npm run build && npm test"
+  },
+  "keywords": [
+    "knowledge-base",
+    "learning",
+    "personal-knowledge-management",
+    "pkm",
+    "cli",
+    "claude",
+    "anthropic",
+    "github",
+    "gitlab",
+    "til",
+    "notes",
+    "markdown"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.36.3",
+    "@gitbeaker/rest": "^42.3.0",
+    "@octokit/rest": "^21.0.0",
+    "commander": "^12.1.0",
+    "inquirer": "^12.3.2",
+    "yaml": "^2.7.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.18.0",
+    "@types/node": "^22.10.5",
+    "eslint": "^9.18.0",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.20.0",
+    "vitest": "^3.0.4"
+  }
+}

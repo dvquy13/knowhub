@@ -1,0 +1,14 @@
+absorb:
+  stage: deploy
+  image: node:20
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_PIPELINE_SOURCE == "web"
+  script:
+    - npm install -g knowhub
+    - knowhub absorb --hub default
+    - git config user.email "knowhub@gitlab-ci"
+    - git config user.name "knowhub"
+    - git push "https://gitlab-ci-token:${CI_JOB_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" HEAD:$CI_DEFAULT_BRANCH
+  variables:
+    GITLAB_TOKEN: $KNOWHUB_TOKEN

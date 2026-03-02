@@ -1,0 +1,15 @@
+name: My Knowledge Hub
+description: Personal software engineering learnings
+
+structure:
+  knowledge_dir: knowledge/
+  index_file: INDEX.md
+
+absorb:
+  strategy: commit
+  batch_size: 20
+  rules: |
+    Organize by topic. One file per major topic.
+    Prefer updating existing files over creating new ones.
+    Each file should have a clear ## Summary at the top.
+    Use practical, actionable language.

@@ -1,0 +1,29 @@
+name: Absorb Learnings
+
+on:
+  schedule:
+    - cron: '0 9 * * 1'  # Every Monday at 9am
+  workflow_dispatch:
+
+jobs:
+  absorb:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install knowhub
+        run: npm install -g knowhub
+
+      - name: Run absorb
+        env:
+          GITHUB_TOKEN: ${{ secrets.KNOWHUB_TOKEN }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          knowhub absorb --hub default
+          git config user.email "knowhub@github-actions"
+          git config user.name "knowhub"
+          git push

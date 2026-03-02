@@ -1,0 +1,6 @@
+default_hub: personal
+hubs:
+  personal:
+    repo: testuser/my-learnings
+    provider: github
+    local: /tmp/test-hub

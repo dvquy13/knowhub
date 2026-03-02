@@ -1,0 +1,7 @@
+name: Test Hub
+structure:
+  knowledge_dir: knowledge/
+  index_file: INDEX.md
+absorb:
+  strategy: commit
+  batch_size: 10
