@@ -16,6 +16,7 @@ knowhub/
 │   │   └── plugin.json         # Plugin manifest
 │   ├── skills/                 # Slash commands (/knowhub:setup, etc.)
 │   └── agents/                 # Absorb agent for synthesis work
+├── marketplace.json            # Claude Code plugin marketplace catalog (root)
 ├── templates/                  # Scaffolding templates
 │   ├── github-actions/         # CI/CD workflow for automated absorb
 │   ├── issue-templates/        # Suggested learning capture format
@@ -80,7 +81,7 @@ knowhub/
 
 ### CLI (`knowhub`)
 
-TypeScript CLI distributed via npm (`npm install -g knowhub`). Four commands:
+TypeScript CLI distributed via npm as `@dvquys/knowhub` (`npm install -g @dvquys/knowhub`). Four commands:
 
 - **`knowhub init`** — interactive setup wizard. Creates hub repo, scaffolds config/templates/workflows, writes `~/.knowhub/config.yml`, optionally installs Claude Code plugin
 - **`knowhub capture <learning>`** — resolves target hub from context, creates a formatted issue via provider adapter
@@ -89,7 +90,14 @@ TypeScript CLI distributed via npm (`npm install -g knowhub`). Four commands:
 
 ### Claude Code Plugin
 
-Distributed via Claude Code marketplace (`/plugin install knowhub`). Provides:
+Distributed via Claude Code marketplace. Source is `./plugin/` in this repo; `marketplace.json` at repo root registers it. Install flow:
+
+```bash
+/plugin marketplace add dvquy13/knowhub        # add this repo as a marketplace
+claude plugin install knowhub@knowhub-marketplace  # install the plugin
+```
+
+Provides:
 
 - **`/knowhub:setup`** — guided conversational onboarding (replaces raw `knowhub init` for Claude Code users)
 - **`/knowhub:capture`** — capture a learning with Claude's help formatting it
@@ -180,7 +188,9 @@ absorb:
 
 ## Decisions
 
-- **Zero external binary deps** — `@octokit/rest` and `@gitbeaker/rest` replace `gh`/`glab` CLI. `npm install -g knowhub` is all the user needs; no provider CLIs required. `(2026-03-02)`
+- **npm package scoped as `@dvquys/knowhub`** — `knowhub` unscoped name was taken on npm by an unrelated project. Scoped under npm username `dvquys` (≠ GitHub username `dvquy13`). `(2026-03-03)`
+- **Plugin distributed via GitHub marketplace** — `marketplace.json` at repo root; users add `dvquy13/knowhub` as a Claude Code marketplace. No separate plugin registry needed. `(2026-03-03)`
+- **Zero external binary deps** — `@octokit/rest` and `@gitbeaker/rest` replace `gh`/`glab` CLI. `npm install -g @dvquys/knowhub` is all the user needs; no provider CLIs required. `(2026-03-02)`
 - **CLI + Plugin, not just one** — CLI serves CI/CD, non-Claude users, and provides `--help` discoverability. Plugin provides the UX layer for Claude Code users. Plugin calls CLI under the hood. `(2026-03-01)`
 - **TypeScript for CLI** — better CLI tooling ecosystem (commander, inquirer), native JSON, aligns with Claude Code plugin ecosystem. `(2026-03-01)`
 - **Issues as inbox, not direct commits** — decouples capture from organization. Capture is frictionless (just create an issue). Organization happens during absorb when Claude has full context. `(2026-03-01)`

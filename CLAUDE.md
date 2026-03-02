@@ -21,6 +21,14 @@ Personal knowledge hub tool — captures learnings as GitHub/GitLab issues, synt
 - `npm run build` — compile TypeScript
 - `npm run test` — run tests
 - `npm run lint` — lint codebase
+- `npm publish --access public` — publish CLI (scoped package; `--access public` required or it defaults to private)
+
+## Publishing
+
+- npm package: `@dvquys/knowhub` (npm username `dvquys`, GitHub username `dvquy13` — different)
+- GitHub repo: `https://github.com/dvquy13/knowhub`
+- Claude Code plugin marketplace: `marketplace.json` at repo root; plugin source is `./plugin/`
+- Plugin install: `/plugin marketplace add dvquy13/knowhub` → `claude plugin install knowhub@knowhub-marketplace`
 
 ## Conventions
 
