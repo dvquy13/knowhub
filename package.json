@@ -1,10 +1,10 @@
 {
-  "name": "knowhub",
+  "name": "@dvquys/knowhub",
   "version": "0.1.0",
   "description": "Personal knowledge hub — capture learnings as issues, synthesize into curated markdown via Claude",
   "type": "module",
   "bin": {
-    "knowhub": "./dist/index.js"
+    "knowhub": "dist/index.js"
   },
   "main": "./dist/index.js",
   "files": [
@@ -37,7 +37,7 @@
     "notes",
     "markdown"
   ],
-  "author": "",
+  "author": "dvquys",
   "license": "MIT",
   "dependencies": {
     "@anthropic-ai/sdk": "^0.36.3",
