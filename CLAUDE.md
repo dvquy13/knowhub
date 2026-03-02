@@ -28,7 +28,7 @@ Personal knowledge hub tool — captures learnings as GitHub/GitLab issues, synt
 - npm package: `@dvquys/knowhub` (npm username `dvquys`, GitHub username `dvquy13` — different)
 - GitHub repo: `https://github.com/dvquy13/knowhub`
 - Claude Code plugin marketplace: `marketplace.json` at repo root; plugin source is `./plugin/`
-- Plugin install: `/plugin marketplace add dvquy13/knowhub` → `claude plugin install knowhub@knowhub-marketplace`
+- Plugin install: `/plugin marketplace add dvquy13/knowhub` → `claude plugin install knowhub@knowhub`
 
 ## Conventions
 

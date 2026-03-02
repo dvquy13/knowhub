@@ -94,7 +94,7 @@ Distributed via Claude Code marketplace. Source is `./plugin/` in this repo; `ma
 
 ```bash
 /plugin marketplace add dvquy13/knowhub        # add this repo as a marketplace
-claude plugin install knowhub@knowhub-marketplace  # install the plugin
+claude plugin install knowhub@knowhub  # install the plugin
 ```
 
 Provides:
