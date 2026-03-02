@@ -1,0 +1,23 @@
+{
+  "name": "knowhub-marketplace",
+  "owner": {
+    "name": "dvquy13"
+  },
+  "metadata": {
+    "description": "Marketplace for the knowhub Claude Code plugin — capture learnings as GitHub/GitLab issues, synthesize into curated markdown via Claude"
+  },
+  "plugins": [
+    {
+      "name": "knowhub",
+      "source": "./plugin",
+      "description": "Personal knowledge hub — capture learnings as issues, synthesize into curated markdown via Claude",
+      "version": "0.1.0",
+      "author": {
+        "name": "dvquy13"
+      },
+      "repository": "https://github.com/dvquy13/knowhub",
+      "license": "MIT",
+      "keywords": ["knowledge-base", "learning", "pkm", "til", "claude", "github", "gitlab"]
+    }
+  ]
+}
