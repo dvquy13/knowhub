@@ -170,7 +170,7 @@ export function makeInitCommand(): Command {
         try {
           gitAdd(hubConfig.local);
           gitCommit(hubConfig.local, 'knowhub: initial scaffold');
-          gitPush(hubConfig.local);
+          gitPush(hubConfig.local, 'origin main');
           logger.success('Pushed initial commit');
         } catch (err) {
           logger.warn(`Could not push: ${getErrorMessage(err)}`);

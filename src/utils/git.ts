@@ -13,8 +13,9 @@ export function gitCommit(dir: string, message: string): void {
   exec(`git commit -m ${JSON.stringify(message)}`, dir);
 }
 
-export function gitPush(dir: string): void {
-  exec('git push', dir);
+export function gitPush(dir: string, setUpstream?: string): void {
+  const cmd = setUpstream ? `git push --set-upstream ${setUpstream}` : 'git push';
+  exec(cmd, dir);
 }
 
 export function gitClone(url: string, targetDir: string): void {

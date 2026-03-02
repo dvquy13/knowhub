@@ -8,7 +8,10 @@
       "Bash(npm:*)",
       "Bash(xargs sh:*)",
       "Bash(gh repo:*)",
-      "Skill(project-docs)"
+      "Skill(project-docs)",
+      "Bash(xargs cat:*)",
+      "Bash(git:*)",
+      "Bash(gh api:*)"
     ]
   }
 }
