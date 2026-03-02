@@ -6,7 +6,9 @@
       "Bash(npm run:*)",
       "Bash(node:*)",
       "Bash(npm:*)",
-      "Bash(xargs sh:*)"
+      "Bash(xargs sh:*)",
+      "Bash(gh repo:*)",
+      "Skill(project-docs)"
     ]
   }
 }
