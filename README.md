@@ -16,17 +16,12 @@ knowhub is a two-part tool: a CLI and a Claude Code plugin. You capture learning
 
 Install the plugin, then let `/knowhub:setup` walk you through everything:
 
-In a Claude Code session:
-```
-/plugin marketplace add dvquy13/knowhub
-```
-
-In your terminal:
 ```bash
+claude plugin marketplace add dvquy13/knowhub
 claude plugin install knowhub@knowhub
 ```
 
-Then back in any Claude Code session:
+Then in any Claude Code session:
 ```
 /knowhub:setup
 ```
