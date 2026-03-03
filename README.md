@@ -131,6 +131,15 @@ The plugin provides slash commands inside Claude Code sessions, letting Claude h
 
 The plugin also passively notices when learnings come up during a session and offers to capture them — it always asks before creating an issue, never auto-captures.
 
+### Updating the plugin
+
+The plugin does not auto-update. When a new version is released, run:
+
+```bash
+claude plugin marketplace update knowhub   # refresh the marketplace catalog
+claude plugin update knowhub               # install the new version
+```
+
 ## Configuration
 
 ### `~/.knowhub/config.yml` (user-level)

@@ -188,6 +188,7 @@ absorb:
 - **`release-it` + `@release-it/conventional-changelog` for releases** — PR titles follow conventional commits (validated by CI), squash merge keeps main clean, `release-it` reads commits since last tag to generate CHANGELOG and bump version. No release branches needed — main accumulates features, release whenever ready. `(2026-03-04)`
 - **npm package scoped as `@dvquys/knowhub`** — `knowhub` unscoped name was taken on npm by an unrelated project. Scoped under npm username `dvquys` (≠ GitHub username `dvquy13`). `(2026-03-03)`
 - **Plugin distributed via GitHub marketplace** — `.claude-plugin/marketplace.json` (not root `marketplace.json`); skill paths in `plugin.json` must start with `./` (e.g. `"./skills/setup"`); users add `dvquy13/knowhub` as a Claude Code marketplace. No separate plugin registry needed. `(2026-03-03)`
+- **Plugin version synced on every release** — `plugin/.claude-plugin/plugin.json` version drives Claude Code cache invalidation; bumping it is required for users to receive updates. `release-it` runs `scripts/sync-plugin-version.mjs` via `after:bump` hook to keep plugin.json in sync with package.json. `(2026-03-04)`
 - **Zero external binary deps** — `@octokit/rest` and `@gitbeaker/rest` replace `gh`/`glab` CLI. `npm install -g @dvquys/knowhub` is all the user needs; no provider CLIs required. `(2026-03-02)`
 - **CLI + Plugin, not just one** — CLI serves CI/CD, non-Claude users, and provides `--help` discoverability. Plugin provides the UX layer for Claude Code users. Plugin calls CLI under the hood. `(2026-03-01)`
 - **TypeScript for CLI** — better CLI tooling ecosystem (commander, inquirer), native JSON, aligns with Claude Code plugin ecosystem. `(2026-03-01)`
@@ -207,7 +208,6 @@ absorb:
 - `@gitbeaker/rest` Issues API: use `Issues` named export, constructor takes `{ host, token }` — not a single `Gitlab` class
 - INDEX.md commit: guarded by `hasUncommittedChanges()` — INDEX.md may not change if no knowledge files were added/updated
 - Vitest ESM: mocking `existsSync` from `fs` is unreliable — use real temp dirs (`os.tmpdir()` + `fs.mkdtemp`) for file system tests
-- Plugin marketplace cache is not auto-refreshed when upstream GitHub updates — run `claude plugin marketplace update knowhub` before reinstalling; stale cache silently uses the old commit
 
 ## Dependencies
 
