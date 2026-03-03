@@ -7,7 +7,7 @@
 ```
 knowhub/
 ├── src/                        # CLI source (TypeScript)
-│   ├── cli/                    # Command definitions (init, capture, absorb, index)
+│   ├── cli/                    # Command definitions (init, capture, absorb, index, status)
 │   ├── providers/              # GitHub/GitLab adapters
 │   ├── absorb/                 # Synthesis engine (Claude integration)
 │   └── config/                 # Config management (~/.knowhub/)
@@ -88,6 +88,7 @@ TypeScript CLI distributed via npm as `@dvquys/knowhub` (`npm install -g @dvquys
 - **`knowhub capture <learning>`** — resolves target hub from context, creates a formatted issue via provider adapter
 - **`knowhub absorb`** — the core intelligence. Fetches issues, invokes Claude for synthesis, commits results, closes issues
 - **`knowhub index`** — regenerates `INDEX.md` from current knowledge files
+- **`knowhub status`** — shows config path, all configured hubs with provider/repo/local clone status/token source/knowledge dir; purely informational, no side effects
 
 ### Claude Code Plugin
 
