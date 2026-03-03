@@ -7,6 +7,7 @@ import { makeCaptureCommand } from './cli/capture.js';
 import { makeIndexCommand } from './cli/index-cmd.js';
 import { makeAbsorbCommand } from './cli/absorb.js';
 import { makeInitCommand } from './cli/init.js';
+import { makeStatusCommand } from './cli/status.js';
 
 const program = new Command();
 
@@ -30,6 +31,7 @@ program.addCommand(makeCaptureCommand());
 program.addCommand(makeIndexCommand());
 program.addCommand(makeAbsorbCommand());
 program.addCommand(makeInitCommand());
+program.addCommand(makeStatusCommand());
 
 program.parseAsync(process.argv).catch((err: unknown) => {
   if (err instanceof KnowhubError) {
