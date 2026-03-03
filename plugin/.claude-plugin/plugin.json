@@ -1,6 +1,6 @@
 {
   "name": "knowhub",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Personal knowledge hub — capture learnings as issues, synthesize into curated markdown via Claude",
   "skills": [
     "./skills/setup",
