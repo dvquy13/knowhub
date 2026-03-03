@@ -11,7 +11,8 @@
       "Skill(project-docs)",
       "Bash(xargs cat:*)",
       "Bash(git:*)",
-      "Bash(gh api:*)"
+      "Bash(gh api:*)",
+      "Bash(knowhub:*)"
     ]
   }
 }

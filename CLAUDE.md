@@ -23,7 +23,7 @@ Personal knowledge hub tool — captures learnings as GitHub/GitLab issues, synt
 - `npm run link` — build + npm link (symlinks system `knowhub` to this repo's `dist/` for local dev)
 - `npm run test` — run tests
 - `npm run lint` — lint codebase
-- `npm publish --access public` — publish CLI (scoped package; `--access public` required or it defaults to private)
+- `npm run release` — interactive release: changelog → version bump → tag → npm publish (run from `main`)
 
 ## Publishing
 
@@ -34,7 +34,8 @@ Personal knowledge hub tool — captures learnings as GitHub/GitLab issues, synt
 ## Conventions
 
 - Provider adapters in `src/providers/` — one file per provider, implement shared interface
-- Skills in `plugin/skills/` — one directory per skill with `SKILL.md`
+- `plugin/skills/` — end-user skills distributed with the Claude Code plugin (for knowhub users)
+- `.claude/skills/` — developer workflow skills for contributors to this repo (not distributed)
 - All CLI commands must support `--hub <name>` flag to override default hub
 - Config resolution: CLI flag > `~/.knowhub/config.yml` default_hub
 - All imports within `src/` must use `.js` extension (NodeNext ESM requirement)

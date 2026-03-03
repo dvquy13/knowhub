@@ -185,6 +185,7 @@ absorb:
 
 ## Decisions
 
+- **`release-it` + `@release-it/conventional-changelog` for releases** — PR titles follow conventional commits (validated by CI), squash merge keeps main clean, `release-it` reads commits since last tag to generate CHANGELOG and bump version. No release branches needed — main accumulates features, release whenever ready. `(2026-03-04)`
 - **npm package scoped as `@dvquys/knowhub`** — `knowhub` unscoped name was taken on npm by an unrelated project. Scoped under npm username `dvquys` (≠ GitHub username `dvquy13`). `(2026-03-03)`
 - **Plugin distributed via GitHub marketplace** — `.claude-plugin/marketplace.json` (not root `marketplace.json`); skill paths in `plugin.json` must start with `./` (e.g. `"./skills/setup"`); users add `dvquy13/knowhub` as a Claude Code marketplace. No separate plugin registry needed. `(2026-03-03)`
 - **Zero external binary deps** — `@octokit/rest` and `@gitbeaker/rest` replace `gh`/`glab` CLI. `npm install -g @dvquys/knowhub` is all the user needs; no provider CLIs required. `(2026-03-02)`
@@ -217,3 +218,5 @@ absorb:
 - `@gitbeaker/rest` — GitLab API client (replaces `glab` CLI dependency)
 - `claude` CLI (external, optional) — headless absorb invocation
 - `@anthropic-ai/sdk` — direct API fallback for absorb in CI/CD
+- `release-it` — interactive release runner (changelog, version bump, tag, npm publish)
+- `@release-it/conventional-changelog` — generates CHANGELOG from conventional commit history
