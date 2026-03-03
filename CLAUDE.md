@@ -19,6 +19,8 @@ Personal knowledge hub tool — captures learnings as GitHub/GitLab issues, synt
 ## Commands
 
 - `npm run build` — compile TypeScript
+- `npm run dev` — tsc --watch (auto-recompile)
+- `npm run link` — build + npm link (symlinks system `knowhub` to this repo's `dist/` for local dev)
 - `npm run test` — run tests
 - `npm run lint` — lint codebase
 - `npm publish --access public` — publish CLI (scoped package; `--access public` required or it defaults to private)
@@ -38,3 +40,11 @@ Personal knowledge hub tool — captures learnings as GitHub/GitLab issues, synt
 - All imports within `src/` must use `.js` extension (NodeNext ESM requirement)
 - Use `getErrorMessage(err)` from `src/utils/errors.ts` — never inline `err instanceof Error ? err.message : String(err)`
 - Inquirer v12: import prompts from `@inquirer/prompts` (`input`, `select`, `confirm`, `password`)
+
+## Git Workflow
+
+- **Branch**: `git checkout -b <type>/<short-description>` from `main` for each feature/fix
+- **Commits**: Free-form during development — no convention required on feature branches
+- **PR title**: Must follow conventional commits (`feat:`, `fix:`, `docs:`, `chore:`, `refactor:`) — CI validates automatically. Use `/pr-title` skill to generate one.
+- **Merge**: Squash merge only — one clean conventional commit lands on `main`
+- **Release**: Run `npm run release` locally from `main` — interactive, requires npm credentials

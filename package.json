@@ -21,7 +21,9 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "eslint src tests",
-    "prepublishOnly": "npm run build && npm test"
+    "prepublishOnly": "npm run build && npm test",
+    "link": "npm run build && npm link",
+    "release": "release-it"
   },
   "keywords": [
     "knowledge-base",
@@ -49,8 +51,10 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.18.0",
+    "@release-it/conventional-changelog": "^10.0.5",
     "@types/node": "^22.10.5",
     "eslint": "^9.18.0",
+    "release-it": "^19.2.4",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.20.0",
     "vitest": "^3.0.4"
