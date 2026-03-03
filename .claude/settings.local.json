@@ -12,7 +12,10 @@
       "Bash(xargs cat:*)",
       "Bash(git:*)",
       "Bash(gh api:*)",
-      "Bash(knowhub:*)"
+      "Bash(knowhub:*)",
+      "WebFetch(domain:docs.anthropic.com)",
+      "Bash(npx eslint:*)",
+      "Bash(jq:*)"
     ]
   }
 }

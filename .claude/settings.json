@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "INPUT=$(cat); FILE=$(echo \"$INPUT\" | jq -r '.tool_input.file_path // empty'); [ -z \"$FILE\" ] && exit 0; LINT=$(npx eslint \"$FILE\" --fix 2>&1 | grep -E 'error|warning' | head -10); [ -n \"$LINT\" ] && echo \"$LINT\" >&2; exit 0"
+          }
+        ]
+      }
+    ]
+  }
+}
